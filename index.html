@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine Quiz 💖</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  overflow: hidden;
+}
+
+.card {
+  background: white;
+  width: 420px;
+  padding: 25px;
+  border-radius: 15px;
+  margin: 60px auto;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #e91e63;
+}
+
+.score {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.option {
+  margin: 10px 0;
+}
+
+button {
+  background: #e91e63;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 15px;
+}
+
+button:hover {
+  background: #d81b60;
+}
+
+img {
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+#valentineBox {
+  position: relative;
+  height: 120px;
+}
+
+#noBtn {
+  position: absolute;
+}
+
+#yesBtn {
+  transition: transform 0.25s ease;
+}
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+  <h1>💖 Valentine’s Quiz 💖</h1>
+  <div class="score">Score: <span id="score">0</span>/4</div>
+
+  <!-- Q1 -->
+  <div class="page active">
+    <h2>When did I first kiss you?</h2>
+    <div class="option"><input type="radio" name="q1" value="wrong"> October 5</div>
+    <div class="option"><input type="radio" name="q1" value="correct"> November 17</div>
+    <div class="option"><input type="radio" name="q1" value="wrong"> December 1</div>
+    <button onclick="nextQuestion(1)">Next</button>
+  </div>
+
+  <!-- Q2 -->
+  <div class="page">
+    <h2>What was the first gift I bought for you?</h2>
+    <div class="option"><input type="radio" name="q2" value="wrong"> Chocolates</div>
+    <div class="option"><input type="radio" name="q2" value="correct"> Customized matching Phone covers</div>
+    <div class="option"><input type="radio" name="q2" value="wrong"> Pink Shoes</div>
+    <button onclick="nextQuestion(2)">Next</button>
+  </div>
+
+  <!-- Q3 -->
+  <div class="page">
+    <h2>Where do you wanna travel next?</h2>
+    <div class="option"><input type="radio" name="q3" value="ok"> Seven Sisters</div>
+    <div class="option"><input type="radio" name="q3" value="ok"> Edinburgh</div>
+    <div class="option"><input type="radio" name="q3" value="ok"> Paris</div>
+    <button onclick="nextQuestion(3)">Next</button>
+  </div>
+
+  <!-- Q4 -->
+  <div class="page">
+    <h2>Where did we click this photo?</h2>
+    <img src="photo.jpg">
+    <div class="option"><input type="radio" name="q4" value="ok"> This place ❤️</div>
+    <div class="option"><input type="radio" name="q4" value="ok"> Somewhere special</div>
+    <button onclick="nextQuestion(4)">Finish</button>
+  </div>
+
+  <!-- Valentine -->
+  <div class="page">
+    <h2>Will you be my Valentine? 💖</h2>
+    <div id="valentineBox">
+      <button id="yesBtn" onclick="yesClick()">Yes 💘</button>
+      <button id="noBtn">No ❌</button>
+    </div>
+    <div id="yesMessage" style="display:none; text-align:center; margin-top:20px;">
+      🥹❤️ YAYYY ❤️🥹<br>
+      Happy Valentine’s Day my love 💕<br>
+      I choose you. Always.
+    </div>
+  </div>
+
+</div>
+
+<script>
+let current = 0;
+let score = 0;
+let yesScale = 1;
+const pages = document.querySelectorAll(".page");
+const scoreEl = document.getElementById("score");
+const noBtn = document.getElementById("noBtn");
+
+function showPage(i) {
+  pages.forEach(p => p.classList.remove("active"));
+  pages[i].classList.add("active");
+}
+
+function wrong() {
+  alert("Hmmm... that's so wrong!! I'm gonna kill you for this a😡");
+}
+
+function nextQuestion(q) {
+  const selected = document.querySelector(`input[name="q${q}"]:checked`);
+  if (!selected) return alert("Choose an answer 😌");
+
+  if (selected.value === "correct") {
+    alert("Correct 😍");
+    score++;
+    scoreEl.innerText = score;
+  } else if (selected.value === "wrong") {
+    wrong();
+    return;
+  }
+
+  current++;
+  showPage(current);
+}
+
+function yesClick() {
+  document.getElementById("valentineBox").style.display = "none";
+  document.getElementById("yesMessage").style.display = "block";
+}
+
+function moveNo() {
+  const box = document.getElementById("valentineBox");
+  const maxX = box.clientWidth - noBtn.offsetWidth;
+  const maxY = box.clientHeight - noBtn.offsetHeight;
+
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
+
+  yesScale += 0.15;
+  document.getElementById("yesBtn").style.transform = `scale(${yesScale})`;
+}
+
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+noBtn.addEventListener("click", () =>
+  alert("404 Error, your boyfriend wouldn't like this, think again Sim")
+);
+</script>
+
+</body>
+</html>
