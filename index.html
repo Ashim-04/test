@@ -92,8 +92,9 @@ img {
 
 #valentineBox {
   position: relative;
-  height: 120px;
+  height: 180px;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
 }
@@ -104,6 +105,9 @@ img {
 
 #yesBtn {
   transition: transform 0.25s ease;
+  width: 60%;
+  max-width: 250px;
+  font-size: 1.1em;
 }
 
 /* Animations */
@@ -136,7 +140,7 @@ img {
   animation: hearts 0.8s ease forwards;
 }
 
-/* Mobile text adjustments */
+/* Mobile adjustments */
 @media (max-width: 400px) {
   h1 { font-size: 1.6em; }
   h2 { font-size: 1.2em; }
@@ -169,8 +173,8 @@ img {
   <!-- Q2 -->
   <div class="page">
     <h2>What was the first gift I bought for you?</h2>
-    <div class="option" data-value="correct">Mini Nutella</div>
-    <div class="option" data-value="wrong">Customized matching Phone covers</div>
+    <div class="option" data-value="correct">Customized Matching Phone Covers</div>
+    <div class="option" data-value="wrong">Mini Nutella</div>
     <div class="option" data-value="wrong">Pink Shoes</div>
     <div class="option" data-value="wrong">Ducky and the doll</div>
     <button onclick="nextQuestion(2)">Next</button>
@@ -215,10 +219,11 @@ img {
 <script>
 let current = 0;
 let score = 0;
-let yesScale = 1;
+let yesScale = 1.0;
 const pages = document.querySelectorAll(".page");
 const scoreEl = document.getElementById("score");
 const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
 
 // Handle clickable options
 document.querySelectorAll('.option').forEach(option => {
@@ -240,7 +245,7 @@ function wrong(option) {
     option.style.boxShadow = '';
     option.style.animation = '';
   }, 500);
-  alert("Hmmm... that's so wrong!! I'm gonna kill you for this a😡");
+  alert("Hmmm... that's so wrong!! 😡");
 }
 
 function correct(option) {
@@ -283,15 +288,13 @@ function moveNo() {
   noBtn.style.left = Math.random() * maxX + "px";
   noBtn.style.top = Math.random() * maxY + "px";
 
-  yesScale += 0.15;
-  document.getElementById("yesBtn").style.transform = `scale(${yesScale})`;
+  yesScale += 0.1;
+  yesBtn.style.transform = `scale(${yesScale})`;
 }
 
 noBtn.addEventListener("mouseenter", moveNo);
 noBtn.addEventListener("touchstart", moveNo);
-noBtn.addEventListener("click", () =>
-  alert("404 Error, your boyfriend wouldn't like this, think again Sim")
-);
+noBtn.addEventListener("click", moveNo);
 </script>
 
 </body>
