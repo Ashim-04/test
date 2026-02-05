@@ -298,7 +298,24 @@ function yesClick() {
   document.getElementById("valentineBox").style.display = "none";
   document.getElementById("yesMessage").style.display = "block";
 }
+
+let musicStarted = false;
+
+function startMusic() {
+  if (!musicStarted) {
+    document.getElementById("bgMusic").play();
+    musicStarted = true;
+  }
+}
+
+document.body.addEventListener("click", startMusic);
+document.getElementById("bgMusic").volume = 0.3;
+
 </script>
 
+
+<audio id="bgMusic" loop>
+  <source src="love.mp3" type="audio/mpeg">
+</audio>
 </body>
 </html>
